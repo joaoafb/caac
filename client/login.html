@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <script src="./assets/all.js"></script>
+<script src="./assets/login.js"></script>
+    <link rel="shortcut icon" href="./enfermagem.png" type="image/x-icon">
+</head>
+<body>
+   
+  <header class="page-header">
+
+
+   
+  </header>
+  
+    <main class="menu" id="menu">
+        <div class="container">
+            <h2>Login</h2>
+            <form id="loginForm" method="post">
+              <input type="text" id="email" class="input" placeholder="Email" required>
+              <input type="password" class="input" id="password" placeholder="Senha">
+              <input type="submit" class="zoom" value="Login">
+            </form>
+            <div class="login-container">
+              <p>Ou entre com:</p>
+              <button onclick="signInWithGoogle()" class="login-button"><i class="lni lni-google"></i> Google</button>
+            </div>
+            
+    </main>
+      
+</body>
+</html>

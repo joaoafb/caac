@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <script src="./script.js"></script>
+    <script src="./assets/all.js"></script>
+    <link rel="shortcut icon" href="./enfermagem.png" type="image/x-icon">
+</head>
+<body>
+   
+  <header class="page-header">
+
+  <div class="flex">
+    <h1 class="page-title">Home </h1>
+    <p id="nameop"></p>
+    <p id="unidadeop"></p>
+  </div>
+   <div class="flex row">
+    <button class="button notific"><i class="lni lni-alarm"></i></button>
+    <input type="text" name="" id="operador" placeholder="Digite aqui seu nome">
+    <input type="text" name="" id="unidade" placeholder="Digite aqui a Unidade">
+    <button class="button notific" onclick="deslogar()"><i class="lni lni-power-switch"></i></button>
+   </div>
+   
+  </header>
+  
+    <main class="menu" id="menu">
+        <div id="dessens" onclick="location.href = 'dessens.html'" class="menu-item">
+          <i class="lni lni-text-align-justify"></i>
+          <h3>Fórmulario</h3>
+         <p>...</p>
+        </div>
+        <div id="list" onclick="location.href = 'list.html'" class="menu-item">
+          
+            <i class="lni lni-sthethoscope"></i>
+          <h3>Dessensibilizar</h3>
+          <p>...</p>
+        </div>
+
+        <div onclick="location.href = './receitas.html'" id="receitas" class="menu-item">
+          <i class="lni lni-clipboard"></i>
+        <h3>Receitas</h3>
+        <p>...</p>
+      </div>
+        
+        
+  
+        <div id="list-aut" onclick="location.href = './autorizados.html'" class="menu-item">
+          <i class="lni lni-list"></i>
+          <h3>Autorização</h3>
+          <p>em breve...</p>
+        </div>
+        
+        <div id="pendencia" class="menu-item">
+          <i class="lni lni-timer"></i>
+          <h3>Pendências</h3>
+          <p>em breve...</p>
+        </div>
+        
+        <div id="help" class="menu-item">
+          <i class="lni lni-help"></i>
+          <h3>Ajuda</h3>
+          <p>...</p>
+        </div>
+        
+     
+    </main>
+      
+</body>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+
+  var operadorInput = document.querySelector('#operador');
+  var unidadeInput = document.querySelector('#unidade');
+  var nameOp = document.querySelector('#nameop');
+  var unidadeOp = document.querySelector('#unidadeop');
+
+  operadorInput.value = localStorage.getItem('operador') || '';
+  unidadeInput.value = localStorage.getItem('unidade') || '';
+  nameOp.innerHTML = ' | ' + (localStorage.getItem('operador') || '');
+  unidadeOp.innerHTML = ' Multimagem | ' + (localStorage.getItem('unidade') || '');
+
+  operadorInput.addEventListener('input', function() {
+    localStorage.setItem('operador', operadorInput.value);
+    nameOp.innerHTML = ' | ' + operadorInput.value;
+  });
+
+  unidadeInput.addEventListener('input', function() {
+    localStorage.setItem('unidade', unidadeInput.value);
+    unidadeOp.innerHTML = ' Multimagem | ' + unidadeInput.value;
+  });
+});
+
+
+
+</script>
+<script>
+
+$(window).on('load', function() {
+
+
+     $(document).ready(function() {
+      // Recupera a ordem dos cards do localStorage
+      var savedOrder = localStorage.getItem("cardOrder");
+
+      // Se houver uma ordem salva, aplica-a
+      if (savedOrder) {
+        var cardOrder = savedOrder.split(',');
+        for (var i = 0; i < cardOrder.length; i++) {
+          var cardId = cardOrder[i];
+          var card = $('[id="' + cardId + '"]');
+
+          card.appendTo('#menu');
+        }
+      }
+
+      // Configura o sortable para permitir a reordenação dos cards
+      $('#menu').sortable({
+        update: function() {
+          // Obtém a nova ordem dos cards
+          var newOrder = $('#menu .menu-item').map(function() {
+            return this.id;
+          }).get().join(',');
+
+          // Armazena a nova ordem no localStorage
+          localStorage.setItem("cardOrder", newOrder);
+        }
+      });
+    });  
+});
+</script>
+</html>

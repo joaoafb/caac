@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC | Juazeiro</title>
+    
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <script src="./script.js"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.js"></script>
+      
+<script src="./assets/all.js"></script>
+
+    <link rel="shortcut icon" href="./enfermagem.png" type="image/x-icon">
+</head>
+<body>
+   
+  <header class="page-header">
+ <div onclick="location.href = 'index.html'" class="button back">   <i class="lni lni-pointer-left"></i><span>Voltar</span></div>
+ <div onclick="backpage()" class="button backbtn" style="display: none;">   <i class="lni lni-pointer-left"></i><span>Voltar</span></div>
+<div>
+    <h1 class="page-title">Dessensibilizados</h1>
+    <p id="sub-page">Para enfermeiras e responsáveis</p>
+</div>
+
+   
+  </header>
+  <main class="menu" id="menu" style="display: flex;">
+    <div  onclick="dash()"  class="menu-item">
+        <i class="lni lni-grid-alt"></i>
+      <h3>Dashboard</h3>
+    </div>
+    <div  onclick="pendencias()" class="menu-item">
+        <i class="lni lni-hourglass"></i>
+      <h3>Pendêntes</h3>
+
+    </div>
+
+    <div onclick="table()"  class="menu-item">
+        <i class="lni lni-list"></i>
+      <h3>Todos os Pacientes</h3>
+
+    </div>
+
+    
+ 
+</main>
+
+<!--DASHBOAD-->
+
+<div id="dashboard" style="display: none;" >
+   
+    <div id="chartAllPatients" style="height: 300px;"></div>
+    <span id="countpac"></span>
+
+  </div>  
+  
+<!--LISTA DE PACIENTES (TABLE)-->
+<div class="table" id="listatable" style="display: none;">
+    
+<br><div class="alert">
+    <i class="lni lni-info-circle"></i>
+    <span>A pesquisa pode ser realizada por nome, data de agendamento, exame, demanda, observação ou responsável.</span>
+  </div>
+<br>  
+   <div class="flex full row">
+   
+        <input type="text" id="searchInput" oninput="searchUsers()" placeholder="Pesquise por dados adicionados">
+        <button id="filterButton" onclick="openFilterOptions()"><i class="lni lni-funnel"></i></button>
+        <button class="imprimir"  id="openModal">  <i class="lni lni-printer pr"></i>Imprimir </button>
+      </div>
+      <div id="filterOptions" class="ui-draggable ui-draggable-handle" style="display: none; left: 665.719px; top: 80.941px;">
+
+        <label for="exameHoje">
+          <input type="checkbox" id="exameHoje" onclick="handleCheckboxClick(this);datahoje()"> Exames agendados para hoje
+        </label>
+        <label for="exameAmanha">
+          <input type="checkbox" id="exameAmanha" onclick="handleCheckboxClick(this);dataamanha()"> Exames agendados para amanhã
+        </label>
+        <label for="pacientesAlergicos">
+          <input type="checkbox" id="pacientesAlergicos" onclick="handleCheckboxClick(this);alergico()"> Pacientes alérgicos
+        </label>
+        <label for="pacientesAsmaticos">
+          <input type="checkbox" id="pacientesAsmaticos" onclick="handleCheckboxClick(this);asmatico()"> Pacientes asmáticos
+        </label>
+      
+      </div>
+      <br>
+      
+  
+    <table>
+      <thead>
+        <tr>
+          <th>ID (Huggy)</th>
+          <th>Nome</th>
+          <th>Exame</th>
+          <th>Data de Agendamento</th>
+          <th>Demanda</th>
+          <th>Observações</th>
+          <th>Responsável</th>
+          <th>Guia Anexada</th>
+          <th>Status</th>
+          <th>Ação</th>
+        </tr>
+      </thead>
+      <tbody id="list-pac">
+      
+       
+        <!-- Adicione mais linhas conforme necessário -->
+      </tbody>
+    </table>
+  
+</div>
+ 
+     
+
+<!--PENDENCIAS-->      
+<div id="pendencias" style="display: none;">
+  <table>
+    <thead>
+      <tr>
+        <th>Registro</th>
+        <th>Nome</th>
+        <th>Exame</th>
+        <th>Data de Agendamento</th>
+        <th>Demanda</th>
+        <th>Observações</th>
+        <th>Responsável</th>
+        <th>Guia Anexada</th>
+        <th>Status</th>
+        <th>Receita</th>
+        <th>Imprimir</th>
+      </tr>
+    </thead>
+    <tbody id="list-pend">
+    
+     
+      <!-- Adicione mais linhas conforme necessário -->
+    </tbody>
+  </table>
+
+</div>
+
+
+    <!--MODAL 1-->
+  
+    <div id="modal" class="modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Imprimir Dessensibilização</h3>
+            <span id="closeModal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <label for="dessensibilizacaoSelect">
+            Escolha
+              <select id="dessensibilizacaoSelect">
+                <option value="opcao1">De 18/06 até 22/06 (Ultima)</option>
+                <option value="opcao2">De 10/06 até 18/06</option>
+                <option value="opcao3">De 05/06 até 10/06</option>
+              </select>
+            </label>
+          </div>
+          <div class="modal-footer">
+            <button id="imprimirButton">
+              <i class="lni lni-printer"></i> Imprimir
+            </button>
+          </div>
+        </div>
+      </div>
+</body>
+<script>
+
+$(function() {
+  $("#filterOptions").draggable();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var openModalButton = document.getElementById('openModal');
+  var modal = document.getElementById('modal');
+  var closeModalButton = document.getElementById('closeModal');
+
+  openModalButton.addEventListener('click', function() {
+    modal.style.display = 'block';
+  });
+
+  closeModalButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+});
+
+
+
+</script>
+<script>
+// Contagem de documentos com status "Pendente"
+
+   
+  </script>
+</html>
