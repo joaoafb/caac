@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="../assets/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <script src="../firebase/firebase.js"></script>
+    <script src="./index.js"></script>
+    <script src="../assets/enviar.js"></script>
+
+</head>
+<body>
+   
+  <header class="page-header">
+
+  <div class="flex">
+    <h1 class="page-title">Home </h1>
+    <p id="nameop"></p>
+
+  </div>
+   <div class="flex row">
+    <button class="button notific"><i class="lni lni-alarm"></i></button>
+    <button class="button notific" onclick="deslogar()"><i class="lni lni-power-switch"></i></button>
+   
+   </div>
+   
+  </header>
+  
+    <main class="menu" id="menu">
+
+        <div onclick="operador()" id="oper" class="menu-item">
+          <i class="lni lni-network"></i>
+          <h3>Operador(a)</h3>
+     
+        </div>
+        <div id="enfer" onclick="enfermeira()" class="menu-item">
+          
+            <i class="lni lni-sthethoscope"></i>
+          <h3>Enfermeira(o)</h3>
+        
+        </div>
+
+        <div onclick="admin()" id="admin" class="menu-item">
+          <i class="lni lni-cog"></i>
+        <h3>Admin</h3>
+
+      </div>
+        
+        
+  
+      
+     
+    </main>
+      
+
+    <div style="display: none;" id="operador">
+    
+     <div class="menupage">
+      <div class="headermenu">
+        <button class="button notific btnmenu zoom"  onclick="closemenu()"><i class="lni lni-shift-left"></i></button>
+
+      </div>
+      <ul>
+        <div id="btninicio" class="active" onclick="inicio()">
+          <li>Operador</li>
+        </div>
+        <div id="btnpreencher" onclick="preencher()">
+          <li>Preencher Dessensibilização</li>
+        </div>
+        <div id="btnreceita" onclick="receitas()">
+          <li>Receitas</li>
+        </div>
+        <div id="btnenvreceita" style="display: none;" onclick="enviarreceitas()">
+          <li>Enviar Receita</li>
+        </div>
+        <div id="btntodos" onclick="todospac()">
+          <li>Todos os Pacientes</li>
+        </div>
+        <div id="btnback" onclick="back()">
+          <li>Voltar</li>
+        </div>
+      </ul>
+     </div>
+     
+     <div id="content">
+   <div id="inicio" >
+
+</div>
+     <!--PAGINAS-->
+     <main class="menu" id="formulario"  style="display: none;">
+       
+      <div >
+          <div class="modal-contentdessen">
+              <form id="formulario">
+                  <div class="form-column">
+                    <div>
+                      <label for="nome">Nome do Paciente: *</label>
+                      <input autocomplete="off" type="text" id="nome" name="nome" required>
+                    </div>
+                    <div>
+                      <label for="regPaciente">Registro: *</label>
+                      <input  autocomplete="off" type="number" id="regPaciente" name="regPaciente" required>
+                    </div>
+                    <div>
+                      <label for="idConversa">ID Conversa: *</label>
+                      <input  autocomplete="off" type="number" id="idConversa" name="idConversa" required>
+                    </div>
+                    <div>
+                      <label for="dataAgendamento">Data de Agendamento: *</label>
+                      <input  autocomplete="off" type="date" id="dataAgendamento" name="dataAgendamento" required>
+                    </div>
+                    <div>
+                      <label for="demandaPaciente">Demanda do Paciente: *</label>
+                      <select id="demandaPaciente" name="demandaPaciente" required>
+                          <option value="escolha" disabled selected>Escolha</option>
+                        <option value="alergico">Alergico</option>
+                        <option value="asmatico">Asmático</option>
+                        <option value="ambos">Asmático e Alergico</option>
+                        <option value="other">Outros...</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label for="observacao">Observação: *</label>
+                      <textarea  id="observacao" name="observacao" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-column">
+                
+                    <div>
+                      <label for="nomeExame">Exame: *</label>
+                      <input type="text" id="nomeExame" name="nomeExame" required>
+                    </div>
+                    <div>
+                    <div>
+                      <label for="nomeOperador">Nome do Operador(a): *</label>
+                      <input type="text" id="nomeOperador" name="nomeOperador" required>
+                    </div>
+                    <div>
+                      <label for="dataAtual">Data Atual:</label>
+                      <input  autocomplete="off" type="text" id="dataAtual" name="dataAtual" required>
+                    </div>
+                    <div>
+                      <label for="arquivo">Selecionar Arquivo: *</label>
+                      <div id="customFile" class="custom-file">
+                        <input type="file" id="arquivo" name="arquivo" required>
+                        <label for="arquivo" id="customFileLabel"><i class="lni lni-cloud-upload"></i>Arraste e solte o arquivo aqui</label>
+                      </div>
+                    </div>
+                    <br>
+                    <div>
+                      <input type="submit" value="Enviar">
+                    </div>
+                  </div>
+                </form>
+                
+  
+  
+          </div>
+        </div>
+
+      
+   
+  </main>
+     </div>
+    <!--PAGINAS - TODOS-->
+<main class="menu" id="pagetodos" style="display: none;">
+  <div class="search-container">
+    <input type="text" oninput="searchUsers()" id="searchInput" placeholder="Pesquisar...">
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>REGISTRO</th>
+        <th>NOME</th>
+        <th>EXAME</th>
+        <th>DEMANDA</th>
+        <th>DATA DE AGENDAMENTO</th>
+        <th>RESPONSAVEL</th>
+        <th>STATUS</th>
+        <th>AÇÃO</th>
+      </tr>
+    </thead>
+    <tbody id="todospacientes">
+    
+      <!-- Adicione mais linhas com dados fictícios conforme necessário -->
+    </tbody>
+  </table>
+
+</main>
+
+<!--PAGINAS - RECEITAS-->
+<main class="menu" id="pagereceitas" style="display: none;">
+  <div class="search-container">
+    <input type="text" oninput="searchUsers()" id="searchInput" placeholder="Pesquisar...">
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>REGISTRO</th>
+        <th>NOME</th>
+        <th>EXAME</th>
+        <th>DEMANDA</th>
+        <th>DATA DE AGENDAMENTO</th>
+        <th>Dessensibilizado</th>
+        <th>RESPONSAVEL</th>
+  
+        <th>AÇÃO</th>
+      </tr>
+    </thead>
+    <tbody id="exibirreceitas">
+    
+   
+      <!-- Adicione mais linhas com dados fictícios conforme necessário -->
+    </tbody>
+  </table>
+
+</main>
+
+<!--PAGINA ENVIAR RECEITA-->
+ <!--PAGINAS - TODOS-->
+ <main class="menu" id="pageenvreceita" style="display: none;">
+  
+  <div class="search-container">
+    <input type="text" oninput="searchUsers()" id="searchInput" placeholder="Pesquisar...">
+  </div>
+
+  <table id="dataTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>REGISTRO</th>
+        <th>NOME</th>
+        <th>EXAME</th>
+        <th>DATA DE AGENDAMENTO</th>
+        <th>RESPONSAVEL</th>
+        <th>STATUS</th>
+        <th>AÇÃO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>123</td>
+        <td>João</td>
+        <td>Exame A</td>
+        <td>2023-06-23</td>
+        <td>Maria</td>
+        <td>Enviado</td>
+        <td>
+        <button class="btnacao zoom">Ação</button>
+        </td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>456</td>
+        <td>Ana</td>
+        <td>Exame B</td>
+        <td>2023-06-24</td>
+        <td>Pedro</td>
+        <td>Aguardando</td>
+        <td>
+          <button class="btnacao zoom">Ação</button>
+          </td>
+      </tr>
+      <!-- Adicione mais linhas com dados fictícios conforme necessário -->
+    </tbody>
+  </table>
+
+</main>
+
+
+    </div>
+
+
+
+  
+
+
+    <!--MODAL PREENCHER USUARIO LOCAL-->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+  
+        <h2>Informe seu nome</h2>
+        <p>Sempre utilize o mesmo nome</p>
+        <input type="text" id="nameInput">
+        <button class="buttonenv" onclick="submitName()">Continuar</button>
+      </div>
+    </div>
+
+    <!--MODAL PERMISSAO-->
+     <div id="modalpem" class="modal">
+      <div class="modal-content">
+  
+        <h2>Informe sua senha</h2>
+        <p></p>
+        <input type="password" id="passInput">
+        <button id="toggleBtn"><i class="lni lni-eye"></i></button>
+        <button class="buttonenv" onclick="passpem()">Continuar</button>
+      </div>
+    </div>
+
+
+      <!--MODAL PERMISSAO-->
+      <div id="modalpadrao" class="modal">
+        <div class="modal-content">
+    
+          <h2 style="text-align: center;" id="message">msg</h2>
+        
+        </div>
+      </div>
+
+
+         <!--MODAL-->
+         <div id="modalacao" class="modal" style="display: none;">
+          <div class="modal-content">
+      <form id="formchamado" onsubmit="return false;">
+            <h2 style="text-align: center;" id="message">Motivo do Chamado</h2>
+            <input required type="text" id="motivo">
+            <h2 style="text-align: center;">Descrição do Chamado</h2>
+            <textarea required name="" id="descricao" cols="30" rows="20" ></textarea>
+            <br>
+            <button class="buttonenv" type="submit">Enviar</button>
+          </form>
+          <button class="buttonenv" onclick="document.querySelector('#modalacao').style.display = 'none'" type="button">Fechar</button>
+          </div>
+        </div>
+
+                <!--MODAL-->
+                <div id="modalinfor" class="modal" style="display: none;">
+                
+                </div>
+          
+  
+</body>
+
+<script>
+$(window).on('load', function() {
+
+
+     $(document).ready(function() {
+      // Recupera a ordem dos cards do localStorage
+      var savedOrder = localStorage.getItem("cardOrder");
+
+      // Se houver uma ordem salva, aplica-a
+      if (savedOrder) {
+        var cardOrder = savedOrder.split(',');
+        for (var i = 0; i < cardOrder.length; i++) {
+          var cardId = cardOrder[i];
+          var card = $('[id="' + cardId + '"]');
+
+          card.appendTo('#menu');
+        }
+      }
+
+      // Configura o sortable para permitir a reordenação dos cards
+      $('#menu').sortable({
+        update: function() {
+          // Obtém a nova ordem dos cards
+          var newOrder = $('#menu .menu-item').map(function() {
+            return this.id;
+          }).get().join(',');
+
+          // Armazena a nova ordem no localStorage
+          localStorage.setItem("cardOrder", newOrder);
+        }
+      });
+    });  
+});
+</script>
+</html>

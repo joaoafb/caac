@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC | Juazeiro</title>
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <script src="./script.js"></script>
+    <script src="./assets/all.js"></script>
+    <link rel="shortcut icon" href="./enfermagem.png" type="image/x-icon">
+</head>
+<body>
+   
+  <header class="page-header">
+ <div onclick="location.href = 'index.html'" class="button">   <i class="lni lni-pointer-left"></i><span>Voltar</span></div>
+ <h1 class="page-title">Autorizados</h1>
+
+   
+  </header>
+  
+<div class="table">
+    
+<br><div class="alert">
+    <i class="lni lni-info-circle"></i>
+    <span>A pesquisa pode ser realizada por nome, exame, convênio e responsável
+    </span>
+  </div>
+<br>  
+   <div class="flex full row">
+   
+        <input type="text" id="searchInput" oninput="searchUsers()" placeholder="Pesquise por dados adicionados">
+        <button id="filterButton" onclick="addpaciente()"><i class="lni lni-plus"></i></button>
+     
+      </div>
+     
+      <br>
+      
+      <table>
+        <thead>
+          <tr>
+            <th>Nome do Paciente</th>
+            <th>Val. Aut</th>
+            <th>Val. Solic</th>
+            <th>Exame</th>
+            <th>Convênio</th>
+            <th>Data de Solicitação</th>
+            <th>Status</th>
+            <th>Responsável</th>
+            <th>Observação</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>João da Silva</td>
+            <td>02/05</td>
+            <td>06/04</td>
+            <td>RM Cranio</td>
+            <td>Bradesco</td>
+            <td>01/01/2022</td>
+            <td class="status-autorizado">Autorizado</td>
+            <td>Maria</td>
+            <td>N/A</td>
+            <td>
+                <button class="imprimir"><i class="lni lni-pencil"></i></button> <!-- Botão Imprimir -->
+              </td>
+          </tr>
+          <tr>
+            <td>Maria Oliveira</td>
+            <td>02/05</td>
+            <td>06/04</td>
+            <td>Hemograma</td>
+            <td>Planserv</td>
+            <td>02/01/2022</td>
+            <td class="status-analise">Análise</td>
+            <td>João</td>
+            <td>N/A</td>
+            <td>
+                <button class="imprimir"><i class="lni lni-pencil"></i></button> <!-- Botão Imprimir -->
+              </td>
+          </tr>
+          <tr>
+            <td>Rodrigo Feitosa</td>
+            <td>02/05</td>
+            <td>06/04</td>
+            <td>TC TORAX</td>
+            <td>Postal Saude</td>
+            <td>02/01/2022</td>
+            <td class="status-negado">Negado</td>
+            <td>João</td>
+            <td>N/A</td>
+            <td>
+                <button class="imprimir"><i class="lni lni-pencil"></i></button> <!-- Botão Imprimir -->
+              </td>
+          </tr>
+        </tbody>
+      </table>
+
+  
+</div>
+ 
+     
+
+<div id="preencher">
+  <div class="column">
+    <div>
+      <label>Nome do Paciente:</label>
+      <input type="text" id="nomePaciente" />
+    </div>
+    <div>
+      <label>Exame:</label>
+      <input type="text" id="exame" />
+    </div>
+    <div>
+      <label>Convênio:</label>
+      <input type="text" id="convenio" />
+    </div>
+    <div>
+      <label>Data de Solicitação:</label>
+      <input type="date" id="dataSolicitacao" />
+    </div>
+    <div>
+      <label>Data Atual:</label>
+      <input type="date" id="dataAutor" />
+    </div>
+  </div>
+  <div class="column">
+    <div>
+      <label>Status:</label>
+      <input type="text" id="status" />
+    </div>
+    <div>
+      <label>Responsável:</label>
+      <input type="text" id="responsavel" />
+    </div>
+    <div>
+      <label>Observação:</label>
+      <textarea id="observacao"></textarea>
+    </div>
+    <div>
+      <label>Validade da Guia: (Automático)</label>
+      <input type="date" id="validadeGuia" />
+    </div>
+    <div>
+      <label>Validade da Autorização: (Automático)</label>
+      <input type="date" id="validadeAutorizacao" />
+    </div>
+    <button type="submit" class="buttonenv">Enviar</button>
+    <button type="button" onclick="back()" class="buttonenv">Voltar</button>
+  </div>
+</div>
+
+    <!--MODAL 1-->
+  
+</body>
+<script>
+
+$(function() {
+  $("#filterOptions").draggable();
+});
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  var openModalButton = document.getElementById('openModal');
+  var modal = document.getElementById('modal');
+  var closeModalButton = document.getElementById('closeModal');
+
+  openModalButton.addEventListener('click', function() {
+    modal.style.display = 'block';
+  });
+
+  closeModalButton.addEventListener('click', function() {
+    modal.style.display = 'none';
+  });
+});
+
+
+
+</script>
+</html>

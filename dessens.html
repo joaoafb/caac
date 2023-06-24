@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CAAC | Juazeiro</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="./assets/style.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <script src="./script.js"></script>
+    <script src="./assets/all.js"></script>
+    <script src="./assets/enviar.js"></script>
+    <link rel="shortcut icon" href="./enfermagem.png" type="image/x-icon">
+</head>
+<body>
+   
+  <header class="page-header">
+ <div onclick="location.href = 'index.html'" class="button">   <i class="lni lni-pointer-left"></i><span>Voltar</span></div>
+    <h1 class="page-title">Dessensibilização</h1>
+   
+  </header>
+  
+    <main class="menu" >
+       
+        <div >
+            <div class="modal-contentdessen">
+                <form id="formulario">
+                    <div class="form-column">
+                      <div>
+                        <label for="nome">Nome do Paciente: *</label>
+                        <input autocomplete="off" type="text" id="nome" name="nome" required>
+                      </div>
+                      <div>
+                        <label for="regPaciente">Registro: *</label>
+                        <input  autocomplete="off" type="number" id="regPaciente" name="regPaciente" required>
+                      </div>
+                      <div>
+                        <label for="idConversa">ID Conversa: *</label>
+                        <input  autocomplete="off" type="number" id="idConversa" name="idConversa" required>
+                      </div>
+                      <div>
+                        <label for="dataAgendamento">Data de Agendamento: *</label>
+                        <input  autocomplete="off" type="date" id="dataAgendamento" name="dataAgendamento" required>
+                      </div>
+                      <div>
+                        <label for="demandaPaciente">Demanda do Paciente: *</label>
+                        <select id="demandaPaciente" name="demandaPaciente" required>
+                            <option value="escolha" disabled selected>Escolha</option>
+                          <option value="alergico">Alergico</option>
+                          <option value="asmatico">Asmático</option>
+                          <option value="ambos">Asmático e Alergico</option>
+                          <option value="other">Outros...</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label for="observacao">Observação: *</label>
+                        <textarea  id="observacao" name="observacao" required></textarea>
+                      </div>
+                    </div>
+                    <div class="form-column">
+                  
+                      <div>
+                        <label for="nomeExame">Exame: *</label>
+                        <input type="text" id="nomeExame" name="nomeExame" required>
+                      </div>
+                      <div>
+                      <div>
+                        <label for="nomeOperador">Nome do Operador: *</label>
+                        <input type="text" id="nomeOperador" name="nomeOperador" required>
+                      </div>
+                      <div>
+                        <label for="dataAtual">Data Atual:</label>
+                        <input  autocomplete="off" type="date" id="dataAtual" name="dataAtual" required>
+                      </div>
+                      <div>
+                        <label for="arquivo">Selecionar Arquivo: *</label>
+                        <div id="customFile" class="custom-file">
+                          <input type="file" id="arquivo" name="arquivo" required>
+                          <label for="arquivo" id="customFileLabel"><i class="lni lni-cloud-upload"></i>Arraste e solte o arquivo aqui</label>
+                        </div>
+                      </div>
+                      <div>
+                        <input type="submit" value="Enviar">
+                      </div>
+                    </div>
+                  </form>
+                  
+    
+    
+            </div>
+          </div>
+ 
+        
+     
+    </main>
+      
+    <!--MODAL 1-->
+  
+</body>
+<script>
+  $(document).ready(function() {
+    $("#arquivo").change(function() {
+      var fileName = $(this).val().split("\\").pop();
+      $("#customFileLabel").text(fileName);
+    });
+  });
+
+  $(document).ready(function() {
+    // Obter o elemento do campo "dataAtual"
+    var dataAtualInput = document.getElementById("dataAtual");
+    
+    // Obter a data atual
+    var dataAtual = new Date();
+    
+    // Formatando a data para o formato "YYYY-MM-DD"
+    var dataFormatada = dataAtual.toISOString().split('T')[0];
+    
+    // Definindo o valor do campo "dataAtual" com a data atual formatada
+    dataAtualInput.value = dataFormatada;
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+document.querySelector("#nomeOperador").value = localStorage.getItem("operador")
+
+  });
+</script>
+</html>
