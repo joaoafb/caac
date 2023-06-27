@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <!-- Metadados -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma</title>
+
+    <!-- Scripts -->
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery -->
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- jQuery UI -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <!-- Moment.js -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <!-- Firebase - Core -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <!-- QRCode.js -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- Firebase - Authentication -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <!-- Firebase - Firestore -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+    <!-- Firebase - Storage -->
+    <script src="./assets/pages.js"></script>
+    <!-- Arquivo de scripts local - pages.js -->
+    <script src="./assets/firebase.js"></script>
+    <!-- Arquivo de scripts local - firebase.js -->
+    <script src="./assets/index.js"></script>
+    <!-- Arquivo de scripts local - index.js -->
+    <script src="./assets/enviar.js"></script>
+    <!-- Arquivo de scripts local - enviar.js -->
+
+    <!-- Estilos -->
+    <link rel="stylesheet" href="./assets/style.css">
+    <!-- Arquivo de estilos local - style.css -->
+    <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+    <!-- SweetAlert2 - Tema dark -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <!-- LineIcons - Ícones de linha -->
+    <script src="./assets/control.js"></script>
+    <!--WEB COMP-->
+    <script src="./components/header.js"></script>
+    <script src="./components/modal.js"></script>
+    <script src="./components/app.js"></script>
+    <script src="./components/menu.js"></script>
+
+</head>
+
+
+<body>
+
+    <comp-header></comp-header>
+
+    <!--MODAL PREENCHER USUARIO LOCAL-->
+    <div id="myModal" class="modal" style="display:none">
+        <form class="modal-content">
+            <h2>Preencha os dados:</h2>
+            <input placeholder="Seu Nome" type="text" autocomplete="off" id="nameInput" required><br><br>
+            <input type="password" autocomplete="off" placeholder="Sua Senha" id="inputsenha" required>
+            <button class="buttonenv" onclick="submitName(event)">Continuar</button>
+        </form>
+    </div>
+
+    <div class="menuinicial">
+        <menu-inicial0></menu-inicial0>
+
+        <menu-inicial1></menu-inicial1>
+
+        <menu-inicial2></menu-inicial2>
+
+        <menu-inicial3></menu-inicial3>
+    </div>
+
+    <div class="submenu">
+
+        <div class="sidebar">
+            <sub-menu-operador></sub-menu-operador>
+            <sub-menu-enfermeira></sub-menu-enfermeira>
+            <sub-menu-admin></sub-menu-admin>
+        </div>
+        <div class="content">
+
+        </div>
+    </div>
+
+
+    <div class="modal" id="modalchamado">
+        <form onsubmit="salvarChamado(); return false;" class="conteudomodal">
+            <h1 style="color: white;">Abrir Chamado</h1>
+            <textarea required type="text" id="inputchamado" placeholder="Descrição" rows="30" cols="30"></textarea>
+            <button class="buttonenv" type="submit">Enviar</button>
+            <button class="buttonenv" type="button" onclick="closemodalchamado()">Fechar</button>
+        </form>
+
+    </div>
+
+
+    <audio id="Audio">
+        <source src="./alert.mp3" type="audio/mp3">
+        Seu navegador não suporta a reprodução de áudio.
+      </audio>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+
+</html>
