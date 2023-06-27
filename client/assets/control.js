@@ -565,6 +565,7 @@ function optionTodosPacientes() {
             var exame = $("<td></td>").text(doc.data().exame);
             var dataagend = $("<td></td>").text(doc.data().dataAgendamento);
             var conditionCell = $("<td></td>").text(doc.data().demandaPaciente);
+            var status = $("<td></td>").text(doc.data().status);
             var medicationCell = $("<td></td>").text(doc.data().observacao);
             var nomeOpe = $("<td></td>").text(doc.data().nomeOperador);
 
@@ -599,7 +600,7 @@ function optionTodosPacientes() {
             }));
 
 
-            tableRow.append(nameCell, exame, dataagend, conditionCell, medicationCell, nomeOpe, optionsCell);
+            tableRow.append(nameCell, exame, dataagend, conditionCell, status, medicationCell, nomeOpe, optionsCell);
             $("#tabletodospacientes").append(tableRow);
 
 
@@ -615,6 +616,7 @@ function optionTodosPacientes() {
       <th>Exame</th>
       <th>Agendado</th>
       <th>Demanda</th>
+      <th>Status</th>
       <th>Observação</th>
       <th>Responsável</th>
       <th>Ações</th>
