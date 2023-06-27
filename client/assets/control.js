@@ -1,27 +1,45 @@
 document.addEventListener("DOMContentLoaded", function() {
 
     if (localStorage.getItem("pass") == null) {
-        modallogin()
+        document.querySelector("#myModal").style.display = 'block'
     } else {
-
+        document.querySelector("#myModal").style.display = 'none'
     }
 });
 
-function submitName() {
+
+function submitName(event) {
+    event.preventDefault(); // Desativa o envio padrão do formulário
     var nameInput = document.getElementById("nameInput");
     var name = nameInput.value.trim();
     var passInput = document.getElementById("inputsenha");
     var pass = passInput.value.trim();
 
     if (name !== "") {
-        localStorage.setItem("usuario", name);
-        localStorage.setItem("pass", pass);
-        closeModal();
+        // Verifica se a senha existe na coleção "admin"
+        const db = firebase.firestore();
+        const adminRef = db.collection('admin').where('senha', '==', pass);
+
+        adminRef.get().then((querySnapshot) => {
+            if (querySnapshot.empty) {
+                // Senha não existe na coleção "admin"
+                toast("Senha Inexistente!", 2000);
+            } else {
+                // Senha encontrada na coleção "admin"
+                localStorage.setItem("usuario", name);
+                localStorage.setItem("pass", pass);
+                document.querySelector("#myModal").style.display = 'none'
+                window.location.reload()
+            }
+        }).catch((error) => {
+            console.error('Erro ao verificar a senha:', error);
+        });
     } else {
         // Exiba uma mensagem de erro ou tome alguma outra ação se o campo estiver vazio
-        toast('Por favor, preencha o campo de nome.', 2000)
+        toast('Por favor, preencha o campo de nome.', 2000);
     }
 }
+
 
 function optionHome() {
     $(".content").show()
