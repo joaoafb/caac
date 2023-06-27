@@ -296,7 +296,7 @@ function admin() {
 }
 
 function autorizacao() {
-    alert("Disponivel Em Breve...")
+    toast("Módulo Disponível Em Breve...", 2000)
 
 }
 

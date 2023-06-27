@@ -7,7 +7,7 @@ body {
     user-select: none;
     font-family: 'Montserrat', sans-serif;
     background-color: #FFF;
-    overflow: hidden !important;
+    overflow: hidden;
 }
 
 :root {
@@ -85,7 +85,6 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
     height: 90vh;
     animation: modalContentFadeIn 0.4s ease-in-out forwards;
 }
@@ -502,6 +501,55 @@ label {
     color: #333;
 }
 
+.modalcontent {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70vw;
+    margin: 0 auto;
+    margin-top: 10vh;
+}
+
+.conteudomodal p {
+    color: white;
+}
+
+.modalcontent h2 {
+    color: white;
+    font-size: 20pt;
+}
+
+.ui-autocomplete {
+    animation: none;
+    transition: none;
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.ui-autocomplete .ui-menu-item {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.ui-autocomplete .ui-menu-item:hover {
+    background-color: #f5f5f5;
+    border: none;
+    outline: none;
+}
+
+.ui-autocomplete .ui-state-active {
+    background-color: var(--corpadrao);
+    border: none;
+    outline: none;
+    color: #fff;
+}
+
 input,
 textarea {
     outline: none;
@@ -514,6 +562,21 @@ textarea {
     box-sizing: border-box;
     font-family: inherit;
     font-size: 14px;
+}
+
+
+/* Estilos adicionais para input */
+
+input {
+    background-color: #f8f8f8;
+}
+
+
+/* Estilos adicionais para textarea */
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
 }
 
 select {
@@ -691,7 +754,7 @@ button {
 }
 
 #customFile {
-    padding-bottom: 0px;
+    padding-bottom: 40px;
 }
 
 #customFileLabel {
@@ -726,6 +789,11 @@ button {
     overflow: auto;
 }
 
+.tabela {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
 #logsTable {
     table-layout: fixed;
     width: 100%;
@@ -756,6 +824,7 @@ table {
     width: 95%;
     padding: 10px !important;
     margin-top: 20px;
+    overflow-y: auto !important;
     margin-left: 10px;
     animation: modalContentFadeIn 0.4s ease-in-out forwards;
     font-family: "Segoe UI", Arial, sans-serif;
@@ -1029,9 +1098,10 @@ ul::-webkit-scrollbar {
 }
 
 .submenu .content {
-    overflow-y: scroll;
+    overflow-y: auto;
     display: block;
     width: 100vw;
+    height: 80vh;
 }
 
 .modal {
@@ -1145,7 +1215,7 @@ ul::-webkit-scrollbar {
 }
 
 #chamados {
-    overflow-y: scroll;
+    overflow-y: auto;
     width: 70vw;
     flex-wrap: wrap;
     padding: 20px;
@@ -1349,7 +1419,6 @@ tr:nth-child(even) {
 }
 
 .dados {
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     width: 48%;
 }
 

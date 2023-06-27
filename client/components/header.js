@@ -11,7 +11,7 @@ class MeuHeader extends HTMLElement {
             <p id="nameop"></p>
         </div>
         <div class="flex row">
-            <button onclick="compartilhar()" class="button notific"><i class="lni lni-website"></i></button>
+     
             <button class="button notific" onclick="deslogar()"><i class="lni lni-power-switch"></i></button>
         </div>
         </header>

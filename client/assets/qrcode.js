@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     var arquivoInput = document.getElementById('arquivo');
                     if (arquivoInput.files.length === 0) {
                         // Exibir alerta caso não haja arquivo selecionado
-                        alert('Por favor, selecione um arquivo.');
+                        toast('Por favor, selecione um arquivo.', 2000)
                         return;
                     }
 
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                     // Monitorar o progresso do upload
                     uploadTask.on('state_changed', function(snapshot) {
-                        // Você pode exibir o progresso do upload aqui, se necessário
+                        document.querySelector(".box").style.filter = 'blur(3px)'
                     }, function(error) {
                         // Tratar erros durante o upload do arquivo
                         console.error('Erro ao fazer o upload do arquivo:', error);
@@ -93,6 +93,10 @@ document.addEventListener("DOMContentLoaded", function() {
                                     status: 'Envio Pendente'
                                 })
                                 .then(() => {
+                                    document.querySelector(".box").style.filter = 'blur(0px)'
+                                    setTimeout(() => {
+                                        window.close()
+                                    }, 3000);
                                     console.log("Document successfully updated!");
                                 })
                                 .catch((error) => {

@@ -21,6 +21,8 @@
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
     <!-- QRCode.js -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <!-- Firebase - Authentication -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
     <!-- Firebase - Firestore -->
@@ -56,7 +58,15 @@
 
     <comp-header></comp-header>
 
-    <page-modal-login></page-modal-login>
+    <!--MODAL PREENCHER USUARIO LOCAL-->
+    <div id="myModal" class="modal" style="display:none">
+        <form class="modal-content">
+            <h2>Preencha os dados:</h2>
+            <input placeholder="Seu Nome" type="text" autocomplete="off" id="nameInput" required><br><br>
+            <input type="password" autocomplete="off" placeholder="Sua Senha" id="inputsenha" required>
+            <button class="buttonenv" onclick="submitName()">Continuar</button>
+        </form>
+    </div>
 
     <div class="menuinicial">
         <menu-inicial0></menu-inicial0>
@@ -92,6 +102,10 @@
     </div>
 
 
+    <audio id="Audio">
+        <source src="./alert.mp3" type="audio/mp3">
+        Seu navegador não suporta a reprodução de áudio.
+      </audio>
 
 
 

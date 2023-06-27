@@ -1,28 +1,3 @@
-function modallogin() {
-    class ModalLogin extends HTMLElement {
-        constructor() {
-            super();
-        }
-
-        connectedCallback() {
-            this.innerHTML = `
-            <!--MODAL PREENCHER USUARIO LOCAL-->
-            <div id="myModal" class="modal"  style="display:block">
-                <form class="modal-content">
-                    <h2>Preencha os dados:</h2>
-                    <input placeholder="Seu Nome" type="text" id="nameInput" required><br><br>
-                    <input type="password" placeholder="Sua Senha" id="inputsenha" required>
-                    <button class="buttonenv" onclick="submitName()">Continuar</button>
-                </form>
-            </div>
-            
-          `;
-        }
-    }
-
-    customElements.define('page-modal-login', ModalLogin);
-}
-
 function modalpermissao() {
     class ModalPermissao extends HTMLElement {
         constructor() {
@@ -32,7 +7,7 @@ function modalpermissao() {
         connectedCallback() {
             this.innerHTML = `
             <!--MODAL ADD USER-->
-            <div id="modapermissao" class="modal" style="display:block">
+            <div id="modapermissao" class="modal" style="display:none">
                 <div class="modal-content" id="addmodal">
                     <h2 style="text-align: center;">Adicionar Permissão</h2>
                     <form action="" id="formpem">
